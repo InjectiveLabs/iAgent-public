@@ -46,7 +46,15 @@ All required packages are listed in requirements.txt. Ensure you have Python 3.1
 
 # AI Agent Usage Guide
 
-This guide will help you get started with the AI Agent, including how to use commands, switch networks, and manage agents.
+This guide will help you get started with the AI Agent, including how to use commands, switch networks, and manage agents. All new agents can be viewed and is stored in the agents_config.yaml file with
+the config file looking like:
+```yaml
+agent10:
+  address: inj1sjhrvg6x92x0xuja30lssh0akmur9w4e5grwey
+  created_at: '2024-10-30T12:34:43.745381'
+  private_key: 8a6e35d007a52ca45d1d6b04cccddc696d465857da2c026a2bdb875f8e6079db
+  network: mainnet
+```
 
 ## Commands Overview
 
