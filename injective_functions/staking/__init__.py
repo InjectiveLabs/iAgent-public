@@ -28,6 +28,9 @@ class InjectiveStaking(InjectiveBase):
         :return: Transaction result
         """
         try:
+            if not validator_address.startswith("injvaloper"):
+                raise ValueError("Invalid validator address format")
+
             # Step 1: Fetch the initial INJ balance
             balance_response = await self.chain_client.client.get_bank_balance(
                 address=self.chain_client.address.to_acc_bech32(),
@@ -62,7 +65,7 @@ class InjectiveStaking(InjectiveBase):
             delegate_msg = self.chain_client.composer.MsgDelegate(
                 delegator_address=self.chain_client.address.to_acc_bech32(),
                 validator_address=validator_address,
-                amount=rewards_to_stake / (10 ** 18),
+                amount=rewards_to_stake / Decimal('1e18'),
             )
             delegate_response = await self.chain_client.build_and_broadcast_tx(delegate_msg)
 
