@@ -50,15 +50,13 @@ class InjectiveStaking(InjectiveBase):
 
             # Step 4: Calculate the withdrawn rewards
             rewards_to_stake = updated_balance - initial_balance
-            if rewards_to_stake <= 0:
-                if rewards_to_stake < 0:
-                    # Specific error for negative rewards
-                    return {
-                        "success": False,
-                        "error": f"Rewards ({rewards_to_stake}) are lower than gas fees, resulting in a negative net "
-                                 f"reward."
-                    }
-                # Generic error for zero rewards
+            if rewards_to_stake < 0:
+                return {
+                    "success": False,
+                    "error": f"Rewards ({rewards_to_stake}) are lower than gas fees, resulting in a negative net reward."
+                }
+
+            if rewards_to_stake == 0:
                 return {"success": False, "error": "No rewards available to compound."}
 
             # Step 5: Restake the rewards
