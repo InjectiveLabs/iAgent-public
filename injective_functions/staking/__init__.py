@@ -62,7 +62,7 @@ class InjectiveStaking(InjectiveBase):
             delegate_msg = self.chain_client.composer.MsgDelegate(
                 delegator_address=self.chain_client.address.to_acc_bech32(),
                 validator_address=validator_address,
-                amount=float(rewards_to_stake) / (10 ** 18),
+                amount=rewards_to_stake / (10 ** 18),
             )
             delegate_response = await self.chain_client.build_and_broadcast_tx(delegate_msg)
 
@@ -72,7 +72,7 @@ class InjectiveStaking(InjectiveBase):
                 "delegate_response": delegate_response,
             }
 
-        except Exception as e:
+        except (TimeoutError, ValueError) as e:
             return {"success": False, "error": str(e)}
 
     async def wait_for_balance_update(
@@ -90,6 +90,9 @@ class InjectiveStaking(InjectiveBase):
         :param interval: Time between balance checks (in seconds)
         :return: Updated balance
         """
+        if interval <= 0:
+            raise ValueError("Interval must be greater than zero.")
+
         for _ in range(timeout // interval):
             balance_response = await self.chain_client.client.get_bank_balance(
                 address=self.chain_client.address.to_acc_bech32(),
