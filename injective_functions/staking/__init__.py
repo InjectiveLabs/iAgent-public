@@ -8,6 +8,8 @@ from typing import Dict
 
 
 class InjectiveStaking(InjectiveBase):
+    DECIMAL_CONVERSION_1E18 = Decimal('1e18')
+
     def __init__(self, chain_client) -> None:
         # Initializes the network and the composer
         super().__init__(chain_client)
@@ -63,7 +65,7 @@ class InjectiveStaking(InjectiveBase):
             delegate_msg = self.chain_client.composer.MsgDelegate(
                 delegator_address=self.chain_client.address.to_acc_bech32(),
                 validator_address=validator_address,
-                amount=rewards_to_stake / Decimal('1e18'),
+                amount=rewards_to_stake / self.DECIMAL_CONVERSION_1E18,
             )
             delegate_response = await self.chain_client.build_and_broadcast_tx(delegate_msg)
 
