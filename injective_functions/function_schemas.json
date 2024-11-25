@@ -103,6 +103,20 @@
         }
       },
       {
+        "name": "compound_rewards",
+        "description": "Automatically reinvest your staking rewards with a specific validator to increase your staked amount.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "validator_address": {
+              "type": "string",
+              "description": "Validator address you want to compound your rewards with."
+            }
+          },
+          "required": ["validator_address"]
+        }
+      },
+      {
         "name": "transfer_funds",
         "description": "Transfer funds to another Injective address",
         "parameters": {

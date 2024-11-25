@@ -45,6 +45,7 @@ class InjectiveFunctionMapper:
         "query_total_supply": ("bank", "query_total_supply"),
         # Staking functions
         "stake_tokens": ("staking", "stake_tokens"),
+        "compound_rewards": ("staking", "compound_rewards"),
         # Auction functions
         "send_bid_auction": ("auction", "send_bid_auction"),
         # Authz functions
