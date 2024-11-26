@@ -1,5 +1,8 @@
 import asyncio
 from decimal import Decimal
+
+from pyinjective.constant import ADDITIONAL_CHAIN_FORMAT_DECIMALS, INJ_DENOM
+
 from injective_functions.base import InjectiveBase
 from typing import Dict
 
@@ -8,8 +11,6 @@ from typing import Dict
 
 
 class InjectiveStaking(InjectiveBase):
-    DECIMAL_CONVERSION_1E18 = Decimal('1e18')
-
     def __init__(self, chain_client) -> None:
         # Initializes the network and the composer
         super().__init__(chain_client)
@@ -36,7 +37,7 @@ class InjectiveStaking(InjectiveBase):
             # Step 1: Fetch the initial INJ balance
             balance_response = await self.chain_client.client.get_bank_balance(
                 address=self.chain_client.address.to_acc_bech32(),
-                denom="inj"
+                denom=INJ_DENOM
             )
             initial_balance = Decimal(balance_response.balance.amount)
 
@@ -48,7 +49,7 @@ class InjectiveStaking(InjectiveBase):
             withdraw_response = await self.chain_client.build_and_broadcast_tx(withdraw_msg)
 
             # Step 3: Wait for the balance to update
-            updated_balance = await self.wait_for_balance_update(old_balance=initial_balance, denom="inj")
+            updated_balance = await self.wait_for_balance_update(old_balance=initial_balance, denom=INJ_DENOM)
 
             # Step 4: Calculate the withdrawn rewards
             rewards_to_stake = updated_balance - initial_balance
@@ -65,7 +66,7 @@ class InjectiveStaking(InjectiveBase):
             delegate_msg = self.chain_client.composer.MsgDelegate(
                 delegator_address=self.chain_client.address.to_acc_bech32(),
                 validator_address=validator_address,
-                amount=rewards_to_stake / self.DECIMAL_CONVERSION_1E18,
+                amount=rewards_to_stake / Decimal(f"1e{ADDITIONAL_CHAIN_FORMAT_DECIMALS}"),
             )
             delegate_response = await self.chain_client.build_and_broadcast_tx(delegate_msg)
 
