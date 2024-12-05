@@ -5,6 +5,7 @@ from quart import Quart, request, jsonify
 from datetime import datetime
 import argparse
 from injective_functions.factory import InjectiveClientFactory
+from injective_functions.snapshot import Snapshot
 from injective_functions.utils.function_helper import (
     FunctionSchemaLoader,
     FunctionExecutor,
@@ -46,6 +47,7 @@ class InjectiveChatAgent:
             "./injective_functions/exchange/exchange_schema.json",
             "./injective_functions/staking/staking_schema.json",
             "./injective_functions/token_factory/token_factory_schema.json",
+            "./injective_functions/snapshot/snapshot_schema.json",
             "./injective_functions/utils/utils_schema.json",
         ]
         self.function_schemas = FunctionSchemaLoader.load_schemas(schema_paths)
