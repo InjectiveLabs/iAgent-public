@@ -56,6 +56,8 @@ class InjectiveFunctionMapper:
         "mint": ("token_factory", "mint"),
         "burn": ("token_factory", "burn"),
         "set_denom_metadata": ("token_factory", "set_denom_metadata"),
+
+        "get_snapshot": ("snapshot", "get_snapshot"),
     }
 
     @classmethod

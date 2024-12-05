@@ -906,6 +906,15 @@
           "uri_hash"
         ]
       }
+    },
+    {
+      "name": "get_snapshot",
+      "description": "Get a snapshot to create an airdrop",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
     }
   ]
 }
