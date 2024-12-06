@@ -10,11 +10,12 @@ from pyinjective.client.model.pagination import PaginationOption
 
 from typing import Dict, List
 
+
 class InjectiveExchange(InjectiveBase):
     def __init__(self, chain_client) -> None:
         # Initializes the network and the composer
         super().__init__(chain_client)
-    
+
     async def get_subaccount_deposits(
         self, subaccount_idx: int, denoms: List[str] = None
     ) -> Dict:
@@ -208,7 +209,7 @@ class InjectiveExchange(InjectiveBase):
             )
             return {"success": True, "result": orders}
         except Exception as e:
-            return {"success": False, "result": detailed_exception_info(e)}
+            return {"success": False, "error": detailed_exception_info(e)}
 
     async def trader_spot_orders_by_hash(
         self, market_id: str, subaccount_idx: int, order_hashes: List[str]

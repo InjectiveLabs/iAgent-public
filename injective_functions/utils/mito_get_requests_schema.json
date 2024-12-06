@@ -1,0 +1,550 @@
+{
+    "functions": [
+      {
+        "name": "get_vaults",
+        "description": "Retrieve a list of vaults.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "description": "Maximum number of vaults to retrieve"
+            },
+            "pageIndex": {
+              "type": "integer",
+              "description": "Page index for pagination"
+            },
+            "codeID": {
+              "type": "string",
+              "description": "Optional code ID filter"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_vault",
+        "description": "Retrieve a specific vault by slug or contract address.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "description": "Slug of the vault"
+            },
+            "contractAddress": {
+              "type": "string",
+              "description": "Contract address of the vault"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_lp_token_price_chart",
+        "description": "Retrieve LP token price chart for a given vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "vaultAddress": {
+              "type": "string",
+              "description": "Vault address (required path param)"
+            },
+            "fromTime": {
+              "type": "string",
+              "description": "Start time for the chart data"
+            },
+            "toTime": {
+              "type": "string",
+              "description": "End time for the chart data"
+            }
+          },
+          "required": ["vaultAddress"]
+        }
+      },
+      {
+        "name": "get_tvl_chart",
+        "description": "Retrieve TVL chart data for a given vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "vaultAddress": {
+              "type": "string",
+              "description": "Vault address (required path param)"
+            },
+            "fromTime": {
+              "type": "string",
+              "description": "Start time for the chart data"
+            },
+            "toTime": {
+              "type": "string",
+              "description": "End time for the chart data"
+            }
+          },
+          "required": ["vaultAddress"]
+        }
+      },
+      {
+        "name": "get_vaults_by_holder_address",
+        "description": "Retrieve vaults subscribed by a particular holder.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "holderAddress": {
+              "type": "string",
+              "description": "Holder address (required path param)"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            },
+            "pageIndex": {
+              "type": "integer",
+              "description": "Page index for pagination"
+            },
+            "vaultAddress": {
+              "type": "string",
+              "description": "Filter by specific vault address"
+            },
+            "skip": {
+              "type": "integer",
+              "description": "Number of records to skip"
+            }
+          },
+          "required": ["holderAddress"]
+        }
+      },
+      {
+        "name": "get_lp_holders",
+        "description": "Retrieve LP token holders for a given vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "vaultAddress": {
+              "type": "string",
+              "description": "Vault address (required path param)"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            },
+            "pageIndex": {
+              "type": "integer",
+              "description": "Page index for pagination"
+            },
+            "stakingContractAddress": {
+              "type": "string",
+              "description": "Filter by staking contract address"
+            },
+            "skip": {
+              "type": "integer",
+              "description": "Number of records to skip"
+            }
+          },
+          "required": ["vaultAddress"]
+        }
+      },
+      {
+        "name": "get_portfolio",
+        "description": "Retrieve portfolio summary for a holder.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "holderAddress": {
+              "type": "string",
+              "description": "Holder address (required path param)"
+            },
+            "stakingContractAddress": {
+              "type": "string",
+              "description": "Optional staking contract filter"
+            }
+          },
+          "required": ["holderAddress"]
+        }
+      },
+      {
+        "name": "get_leaderboard",
+        "description": "Retrieve the leaderboard.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      },
+      {
+        "name": "get_leaderboard_epochs",
+        "description": "Retrieve leaderboard epochs.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "fromEpochId": {
+              "type": "integer",
+              "description": "Starting epoch ID"
+            },
+            "toEpochId": {
+              "type": "integer",
+              "description": "Ending epoch ID"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_transfers_history",
+        "description": "Retrieve historical transfers.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "vault": {
+              "type": "string",
+              "description": "Vault address filter"
+            },
+            "account": {
+              "type": "string",
+              "description": "Account address filter"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            },
+            "fromNumber": {
+              "type": "integer",
+              "description": "From block/record number"
+            },
+            "toNumber": {
+              "type": "integer",
+              "description": "To block/record number"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_staking_pools",
+        "description": "Retrieve staking pools.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "staker": {
+              "type": "string",
+              "description": "Staker address filter"
+            },
+            "stakingContractAddress": {
+              "type": "string",
+              "description": "Staking contract address filter"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_staking_reward_by_account",
+        "description": "Retrieve staking rewards for a given staker.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "staker": {
+              "type": "string",
+              "description": "Staker address (required path param)"
+            },
+            "stakingContractAddress": {
+              "type": "string",
+              "description": "Staking contract address filter"
+            }
+          },
+          "required": ["staker"]
+        }
+      },
+      {
+        "name": "get_staking_history",
+        "description": "Retrieve historical staking activities.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "fromNumber": {
+              "type": "integer",
+              "description": "From block/record number"
+            },
+            "toNumber": {
+              "type": "integer",
+              "description": "To block/record number"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            },
+            "staker": {
+              "type": "string",
+              "description": "Staker address filter"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_staking_amount_at_height",
+        "description": "Retrieve staking amounts at a given height.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "stakingContractAddress": {
+              "type": "string",
+              "description": "Staking contract address (required path param)"
+            },
+            "denom": {
+              "type": "string",
+              "description": "Denomination filter"
+            },
+            "height": {
+              "type": "string",
+              "description": "Block height"
+            },
+            "staker": {
+              "type": "string",
+              "description": "Staker address filter"
+            },
+            "skip": {
+              "type": "integer",
+              "description": "Records to skip"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            }
+          },
+          "required": ["stakingContractAddress"]
+        }
+      },
+      {
+        "name": "get_health",
+        "description": "Check health of the API.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      },
+      {
+        "name": "get_execution",
+        "description": "Retrieve execution logs for a contract.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "contractAddress": {
+              "type": "string",
+              "description": "Contract address (required path param)"
+            }
+          },
+          "required": ["contractAddress"]
+        }
+      },
+      {
+        "name": "get_missions",
+        "description": "Retrieve mission status of an account.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "account_address": {
+              "type": "string",
+              "description": "Account address (required path param)"
+            }
+          },
+          "required": ["account_address"]
+        }
+      },
+      {
+        "name": "get_mission_leaderboard",
+        "description": "Retrieve mission leaderboard.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "userAddress": {
+              "type": "string",
+              "description": "User address filter"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "list_idos",
+        "description": "Retrieve IDOs based on provided filters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "description": "IDO status filter"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            },
+            "toNumber": {
+              "type": "integer",
+              "description": "Ending record number"
+            },
+            "accountAddress": {
+              "type": "string",
+              "description": "Filter by account address"
+            },
+            "ownerAddress": {
+              "type": "string",
+              "description": "Filter by owner address"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_ido",
+        "description": "Retrieve a single IDO by contract address.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "contractAddress": {
+              "type": "string",
+              "description": "IDO contract address (required path param)"
+            },
+            "accountAddress": {
+              "type": "string",
+              "description": "Filter by account address"
+            }
+          },
+          "required": ["contractAddress"]
+        }
+      },
+      {
+        "name": "get_ido_subscribers",
+        "description": "Retrieve subscribers of a given IDO.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "contractAddress": {
+              "type": "string",
+              "description": "IDO contract address (required path param)"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            },
+            "skip": {
+              "type": "integer",
+              "description": "Number of records to skip"
+            },
+            "sortBy": {
+              "type": "string",
+              "description": "Sort by 'subscribedTime' or 'subscribedAmount'"
+            }
+          },
+          "required": ["contractAddress"]
+        }
+      },
+      {
+        "name": "get_ido_subscription",
+        "description": "Retrieve subscription details in a given IDO for a specific account.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "contractAddress": {
+              "type": "string",
+              "description": "IDO contract address (required path param)"
+            },
+            "accountAddress": {
+              "type": "string",
+              "description": "Account address (required path param)"
+            }
+          },
+          "required": ["contractAddress", "accountAddress"]
+        }
+      },
+      {
+        "name": "get_ido_activities",
+        "description": "Retrieve subscription activities for an IDO.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "contractAddress": {
+              "type": "string",
+              "description": "IDO contract address filter"
+            },
+            "accountAddress": {
+              "type": "string",
+              "description": "Account address filter"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            },
+            "toNumber": {
+              "type": "integer",
+              "description": "Ending record number"
+            }
+          },
+          "required": []
+        }
+      },
+      {
+        "name": "get_whitelist",
+        "description": "Retrieve the whitelist of accounts for a given IDO.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "idoAddress": {
+              "type": "string",
+              "description": "IDO address (required path param)"
+            },
+            "skip": {
+              "type": "integer",
+              "description": "Number of records to skip"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            }
+          },
+          "required": ["idoAddress"]
+        }
+      },
+      {
+        "name": "get_token_metadata",
+        "description": "Retrieve token metadata being processed by the backend.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      },
+      {
+        "name": "get_claim_references",
+        "description": "Retrieve claim references for a given IDO and account.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "accountAddress": {
+              "type": "string",
+              "description": "Account address"
+            },
+            "idoAddress": {
+              "type": "string",
+              "description": "IDO address"
+            },
+            "skip": {
+              "type": "integer",
+              "description": "Number of records to skip"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max number of results"
+            }
+          },
+          "required": ["accountAddress", "idoAddress"]
+        }
+      }
+    ]
+  }
+  

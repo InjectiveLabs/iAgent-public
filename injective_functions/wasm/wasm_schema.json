@@ -1,0 +1,302 @@
+{
+    "functions": [
+      {
+        "name": "subscribe_to_launchpad",
+        "description": "Subscribe to a launchpad using specified contract address and funds.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "contract_address": {
+              "type": "string",
+              "description": "The contract address for the launchpad."
+            },
+            "quote_denom": {
+              "type": "string",
+              "description": "Denomination of the quote token."
+            },
+            "amount": {
+              "type": "number",
+              "description": "Amount of funds to subscribe with."
+            }
+          },
+          "required": ["contract_address", "quote_denom", "amount"]
+        }
+      },
+      {
+        "name": "claim_launchpad_subscription",
+        "description": "Claim subscription for a launchpad.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "contract_address": {
+              "type": "string",
+              "description": "The contract address for the launchpad."
+            }
+          },
+          "required": ["contract_address"]
+        }
+      },
+      {
+        "name": "subscription_mito_spot",
+        "description": "Subscribe to a Mito spot trading vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "base_amount": {
+              "type": "number",
+              "description": "Amount of base token."
+            },
+            "base_denom": {
+              "type": "string",
+              "description": "Denomination of base token."
+            },
+            "quote_amount": {
+              "type": "number",
+              "description": "Amount of quote token."
+            },
+            "quote_denom": {
+              "type": "string",
+              "description": "Denomination of quote token."
+            },
+            "vault_subaccount_id": {
+              "type": "string",
+              "description": "Vault subaccount ID."
+            },
+            "max_penalty": {
+              "type": "number",
+              "description": "Maximum penalty for slippage."
+            },
+            "vault_master_address": {
+              "type": "string",
+              "description": "Vault master contract address."
+            },
+            "vault_contract_type": {
+              "type": "string",
+              "description": "Type of the vault contract."
+            },
+            "spot_redemption_type": {
+              "type": "string",
+              "description": "Type of spot redemption."
+            },
+            "trader_subaccount_idx": {
+              "type": "number",
+              "description": "Trader's subaccount index.",
+              "default": 0
+            }
+          },
+          "required": [
+            "base_amount",
+            "base_denom",
+            "quote_amount",
+            "quote_denom",
+            "vault_subaccount_id",
+            "max_penalty",
+            "vault_master_address",
+            "vault_contract_type",
+            "spot_redemption_type"
+          ]
+        }
+      },
+      {
+        "name": "redeem_mito_vault",
+        "description": "Redeem funds from a Mito vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "redeem_amount": {
+              "type": "number",
+              "description": "Amount to redeem."
+            },
+            "lp_denom": {
+              "type": "string",
+              "description": "LP token denomination."
+            },
+            "vault_subaccount_id": {
+              "type": "string",
+              "description": "Vault subaccount ID."
+            },
+            "max_penalty": {
+              "type": "number",
+              "description": "Maximum penalty for slippage."
+            },
+            "vault_master_address": {
+              "type": "string",
+              "description": "Vault master contract address."
+            },
+            "market_type": {
+              "type": "string",
+              "description": "Market type (e.g., 'Derivative')."
+            },
+            "redemption_type": {
+              "type": "string",
+              "description": "Type of redemption."
+            },
+            "trader_subaccount_idx": {
+              "type": "number",
+              "description": "Trader's subaccount index.",
+              "default": 0
+            }
+          },
+          "required": [
+            "redeem_amount",
+            "lp_denom",
+            "vault_subaccount_id",
+            "max_penalty",
+            "vault_master_address",
+            "market_type",
+            "redemption_type"
+          ]
+        }
+      },
+      {
+        "name": "stake_mito_vault",
+        "description": "Stake LP tokens in a Mito vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number",
+              "description": "Amount to stake."
+            },
+            "vault_lp_denom": {
+              "type": "string",
+              "description": "LP token denomination."
+            },
+            "staking_contract_address": {
+              "type": "string",
+              "description": "Staking contract address."
+            }
+          },
+          "required": [
+            "amount",
+            "vault_lp_denom",
+            "staking_contract_address"
+          ]
+        }
+      },
+      {
+        "name": "unstake_mito",
+        "description": "Unstake LP tokens from a Mito vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number",
+              "description": "Amount to unstake."
+            },
+            "vault_lp_denom": {
+              "type": "string",
+              "description": "LP token denomination."
+            },
+            "vault_token_decimals": {
+              "type": "integer",
+              "description": "Decimals of the token."
+            },
+            "staking_contract_address": {
+              "type": "string",
+              "description": "Staking contract address."
+            }
+          },
+          "required": [
+            "amount",
+            "vault_lp_denom",
+            "vault_token_decimals",
+            "staking_contract_address"
+          ]
+        }
+      },
+      {
+        "name": "claim_stake_mito_vault",
+        "description": "Claim staking rewards from a Mito vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "vault_lp_denom": {
+              "type": "string",
+              "description": "LP token denomination."
+            },
+            "staking_contract_address": {
+              "type": "string",
+              "description": "Staking contract address."
+            }
+          },
+          "required": ["vault_lp_denom", "staking_contract_address"]
+        }
+      },
+      {
+        "name": "claim_rewards_mito",
+        "description": "Claim rewards from a Mito vault.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "vault_lp_denom": {
+              "type": "string",
+              "description": "LP token denomination."
+            },
+            "staking_contract_address": {
+              "type": "string",
+              "description": "Staking contract address."
+            }
+          },
+          "required": ["vault_lp_denom", "staking_contract_address"]
+        }
+      },
+      {
+        "name": "instantiate_cpmm_vault",
+        "description": "Instantiate a CPMM vault with specified parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "base_token_amount": {
+              "type": "number",
+              "description": "Amount of base token."
+            },
+            "base_token_denom": {
+              "type": "string",
+              "description": "Base token denomination."
+            },
+            "quote_token_amount": {
+              "type": "number",
+              "description": "Amount of quote token."
+            },
+            "quote_token_denom": {
+              "type": "string",
+              "description": "Quote token denomination."
+            },
+            "market_id": {
+              "type": "string",
+              "description": "Market ID for the vault."
+            },
+            "fee_bps": {
+              "type": "integer",
+              "description": "Fee basis points."
+            },
+            "base_decimals": {
+              "type": "integer",
+              "description": "Decimals of base token."
+            },
+            "quote_decimals": {
+              "type": "integer",
+              "description": "Decimals of quote token."
+            },
+            "owner_address": {
+              "type": "string",
+              "description": "Owner's address for the vault.",
+              "default": null
+            }
+          },
+          "required": [
+            "base_token_amount",
+            "base_token_denom",
+            "quote_token_amount",
+            "quote_token_denom",
+            "market_id",
+            "fee_bps",
+            "base_decimals",
+            "quote_decimals"
+          ]
+        }
+      }
+    ]
+  }
+  

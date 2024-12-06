@@ -76,9 +76,8 @@ async def impute_market_id(market_id):
 
 
 def detailed_exception_info(e) -> Dict:
-    return {
-        "success": False,
-        "error": {
+    return (
+        {
             "message": str(e),
             "type": type(e).__name__,
             "module": e.__class__.__module__,
@@ -89,4 +88,4 @@ def detailed_exception_info(e) -> Dict:
                 "context": str(e.__context__) if e.__context__ else None,
             },
         },
-    }
+    )
