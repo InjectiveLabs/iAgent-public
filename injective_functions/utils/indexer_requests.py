@@ -9,6 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # This is expected to return a (kv) pair
 async def fetch_decimal_denoms(is_mainnet: bool) -> Dict[str, int]:
     # default url
@@ -43,7 +44,7 @@ async def fetch_decimal_denoms(is_mainnet: bool) -> Dict[str, int]:
 
                 response_dic: Dict[str, int] = {}
                 for denom in denom_data:
-                    response_dic[denom["denom"]] = denom["decimals"]
+                    response_dic[denom["denom"]] = int(denom["decimals"])
                     logger.info(
                         f"Added denom: {denom['denom']} with decimals: {denom['decimals']}"
                     )

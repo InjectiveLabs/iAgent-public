@@ -26,9 +26,13 @@
               "subaccount_idx": {
                   "type": "integer",
                   "description": "Subaccount index for the order"
+              },
+              "leverage" : {
+                "type": "string",
+                "description" : "Leverage for the derivative limit order"
               }
           },
-          "required": ["price", "quantity", "side", "market_id", "subaccount_idx"]
+          "required": ["price", "quantity", "side", "market_id", "subaccount_idx", "leverage"]
       }
   },
   {
@@ -53,9 +57,14 @@
               "subaccount_idx": {
                   "type": "integer",
                   "description": "Subaccount index for the order"
+              },
+              "leverage" : {
+                "type": "string",
+                "description" : "Leverage for the derivative market order"
               }
+
           },
-          "required": ["quantity", "side", "market_id", "subaccount_idx"]
+          "required": ["quantity", "side", "market_id", "subaccount_idx", "leverage"]
       }
   },
   {

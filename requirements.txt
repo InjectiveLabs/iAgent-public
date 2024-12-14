@@ -5,3 +5,4 @@ hypercorn
 colorama
 python-dotenv
 quart
+pyyaml

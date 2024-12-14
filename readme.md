@@ -21,9 +21,11 @@ All required packages are listed in requirements.txt. Ensure you have Python 3.1
 
 ## Installation
 
+### Option 1: Local Installation
+
 1. Clone this repository and navigate into it:
    ```bash
-   git clone org-44571224@github.com:InjectiveLabs/iAgent.git
+   git clone https://github.com/InjectiveLabs/iAgent.git
    cd iAgent  
    ```	
 2. Install the required packages:
@@ -44,9 +46,47 @@ All required packages are listed in requirements.txt. Ensure you have Python 3.1
 	python quickstart.py --url http://0.0.0.0:5000
 	```
 
+### Option 2: Docker Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/InjectiveLabs/iAgent.git
+   cd iAgent
+   ```
+
+2. Build the Docker image:
+   ```bash
+   docker build -t injective-agent .
+   ```
+
+3. Run the container:
+   ```bash
+   docker run -d \
+     -p 5000:5000 \
+     -e OPENAI_API_KEY="<YOUR_OPENAI_API_KEY_GOES_HERE>" \
+     --name injective-agent \
+     injective-agent
+   ```
+
+4. Connect to the agent:
+   ```bash
+   python quickstart.py --url http://localhost:5000
+   ```
+
+To stop the container:
+```bash
+docker stop injective-agent
+```
+
+To restart the container:
+```bash
+docker start injective-agent
+```
+
 # AI Agent Usage Guide
 
-This guide will help you get started with the AI Agent, including how to use commands, switch networks, and manage agents. New agents can be saved and updated in the agents_config.yaml file,
+This guide will help you get started with the AI Agent, including how to use commands, switch networks, and manage agents.
+New agents can be saved and updated in the agents_config.yaml file,
 the structure of the yaml file looks like 
 ```yaml
 agent10:
@@ -67,7 +107,7 @@ The AI Agent supports several commands categorized into general actions, network
 | `clear`   | Clear the current session output.          |
 | `help`    | Display help information.                  |
 | `history` | Show command history in the session.       |
-| `ping`    | Check the agent’s status.                  |
+| `ping`    | Check the agent's status.                  |
 | `debug`   | Toggle debugging mode.                     |
 | `session` | Display current session details.           |
 
@@ -90,4 +130,4 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 
 ## Disclaimer
 
-This repository and the information contained herein (collectively, this "Repository") has been provided for informational and discussion purposes only, and does not constitute nor shall it be construed as offering legal, financial, investment, or business advice. No warranties or guarantees are made about the accuracy of any information or code contained herein. The legal and regulatory risks inherent to digital assets are not the subject of this Repository, and no decision to buy, sell, exchange, or otherwise utilize any digital asset is recommended based on the content of this Repository. USE AT YOUR OWN RISK. THE AUTHORS AND ALL AFFILIATES ASSUME NO RESPONSIBILITY FOR YOUR TRADING RESULTS. For guidance regarding the possibility of said risks, one should consult with his or her own appropriate legal and/or regulatory counsel. One should consult one’s own advisors for any and all matters related to finance, business, legal, regulatory, and technical knowledge or expertise. Use, fork or publication of this Repository represents an acknowledgment that Anti Social Social Capital Ltd and Injective Labs Inc. are indemnified from any form of liability associated with actions taken by any other interested party. That explicit indemnification is acknowledged by the user or publisher to be legally binding and severable from all other portions of this document.
+This repository and the information contained herein (collectively, this "Repository") has been provided for informational and discussion purposes only, and does not constitute nor shall it be construed as offering legal, financial, investment, or business advice. No warranties or guarantees are made about the accuracy of any information or code contained herein. The legal and regulatory risks inherent to digital assets are not the subject of this Repository, and no decision to buy, sell, exchange, or otherwise utilize any digital asset is recommended based on the content of this Repository. USE AT YOUR OWN RISK. THE AUTHORS AND ALL AFFILIATES ASSUME NO RESPONSIBILITY FOR YOUR TRADING RESULTS. For guidance regarding the possibility of said risks, one should consult with his or her own appropriate legal and/or regulatory counsel. One should consult one's own advisors for any and all matters related to finance, business, legal, regulatory, and technical knowledge or expertise. Use, fork or publication of this Repository represents an acknowledgment that Injective Labs Inc. is indemnified from any form of liability associated with actions taken by any other interested party. That explicit indemnification is acknowledged by the user or publisher to be legally binding and severable from all other portions of this document.

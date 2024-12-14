@@ -21,7 +21,9 @@ class InjectiveAccounts(InjectiveBase):
         source_subaccount_id = self.chain_client.address.get_subaccount_id(
             subaccount_idx
         )
-        dst_subaccount_id = self.chain_client.address.get_subaccount_id(subaccount_idx)
+        dst_subaccount_id = self.chain_client.address.get_subaccount_id(
+            dst_subaccount_idx
+        )
         msg = self.chain_client.composer.msg_subaccount_transfer(
             sender=self.chain_client.address.to_acc_bech32(),
             source_subaccount_id=source_subaccount_id,

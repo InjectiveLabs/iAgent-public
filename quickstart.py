@@ -299,7 +299,7 @@ class InjectiveCLI:
             else:
                 return
             response = requests.post(
-                url, json=data, params=params, headers=headers, timeout=30
+                url, json=data, params=params, headers=headers, timeout=60
             )
 
             response.raise_for_status()

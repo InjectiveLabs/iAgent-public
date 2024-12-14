@@ -48,6 +48,9 @@ class InjectiveFunctionMapper:
         "compound_rewards": ("staking", "compound_rewards"),
         # Auction functions
         "send_bid_auction": ("auction", "send_bid_auction"),
+        "fetch_auctions": ("auction", "fetch_auctions"),
+        "fetch_latest_auction": ("auction", "fetch_latest_auction"),
+        "fetch_auction_bids": ("auction", "fetch_auction_bids"),
         # Authz functions
         "grant_address_auth": ("authz", "grant_address_auth"),
         "revoke_address_auth": ("authz", "revoke_address_auth"),

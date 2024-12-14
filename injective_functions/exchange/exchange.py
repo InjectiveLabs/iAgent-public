@@ -10,38 +10,39 @@ from pyinjective.client.model.pagination import PaginationOption
 
 from typing import Dict, List
 
-# TODO: Convert raw exchange message formats to human readable
-
-
 class InjectiveExchange(InjectiveBase):
     def __init__(self, chain_client) -> None:
         # Initializes the network and the composer
         super().__init__(chain_client)
-
+    
     async def get_subaccount_deposits(
-        self, subaccount_idx: int, denoms: str = None
+        self, subaccount_idx: int, denoms: List[str] = None
     ) -> Dict:
         try:
 
-            subaccount_id = await self.chain_client.address.get_subaccount_id(
-                subaccount_idx
+            subaccount_id = self.chain_client.address.get_subaccount_id(subaccount_idx)
+            deposits_response = (
+                await self.chain_client.client.fetch_subaccount_deposits(
+                    subaccount_id=subaccount_id
+                )
             )
-            deposits = await self.chain_client.client.fetch_subaccount_deposits(
-                subaccount_id=subaccount_id
-            )["deposits"]
+            deposits = deposits_response["deposits"]
             denom_decimals = await fetch_decimal_denoms(self.chain_client.network_type)
             human_readable_deposits = {}
-            if len(denoms) > 0:
+            # checks if the denoms are specified
+            if denoms:
+                # iterate through the specified denoms
                 for denom in denoms:
-                    if denom in deposits:
+                    # Corner case 1: denom might not be in deposits found in chain data a case when gpt function calling parses wrong args
+                    if denom in deposits and denom in denom_decimals:
                         human_readable_deposits[denom] = {
                             "available_balance": str(
-                                deposits[denom]["availableBalance"]
-                                / denom_decimals[denom]
+                                int(deposits[denom]["availableBalance"])
+                                / 10 ** int(denom_decimals[denom])
                             ),
                             "total_balance": str(
-                                deposits[denom]["totalBalance"]
-                                / 10 ** denom_decimals[denom]
+                                int(deposits[denom]["totalBalance"])
+                                / 10 ** int(denom_decimals[denom])
                             ),
                         }
                     else:
@@ -49,18 +50,20 @@ class InjectiveExchange(InjectiveBase):
                             "available_balance": "balance not found",
                             "total_balance": "balance not found",
                         }
-
+            # Otherwise we iterate through all the denoms
             else:
                 for denom, deposit in deposits.items():
-                    human_readable_deposits[deposit] = {
-                        "available_balance": str(
-                            deposit["availableBalance"] / 10 ** denom_decimals[denom]
-                        ),
-                        "total_balance": str(
-                            deposit["totalBalance"] / 10 ** denom_decimals[denom]
-                        ),
-                    }
+                    if denom in denom_decimals:
+                        human_readable_deposits[denom] = {}
+                        human_readable_deposits[denom]["available_balance"] = str(
+                            int(deposit["availableBalance"])
+                            / 10 ** denom_decimals[denom]
+                        )
 
+                        human_readable_deposits[denom]["total_balance"] = str(
+                            int(deposit["totalBalance"]) / 10 ** denom_decimals[denom]
+                        )
+            return {"success": True, "result": human_readable_deposits}
         except Exception as e:
             return {"success": False, "error": detailed_exception_info(e)}
 
@@ -121,7 +124,7 @@ class InjectiveExchange(InjectiveBase):
             )
             return {"success": True, "result": res}
         except Exception as e:
-            return {"success": False, "result": detailed_exception_info(e)}
+            return {"success": False, "error": detailed_exception_info(e)}
 
     async def get_mid_price_and_tob_spot_market(self, market_id: str) -> Dict:
         try:
@@ -132,7 +135,7 @@ class InjectiveExchange(InjectiveBase):
             )
             return {"success": True, "result": res}
         except Exception as e:
-            return {"success": False, "result": detailed_exception_info(e)}
+            return {"success": False, "error": detailed_exception_info(e)}
 
     async def get_derivatives_orderbook(
         self, market_id: str, limit: int = None
@@ -221,7 +224,7 @@ class InjectiveExchange(InjectiveBase):
             )
             return {"success": True, "result": orders}
         except Exception as e:
-            return {"success": False, "result": detailed_exception_info(e)}
+            return {"success": False, "error": detailed_exception_info(e)}
 
     async def get_subaccount_positions_in_markets(self, market_ids: List[str]) -> Dict:
         try:
@@ -242,7 +245,7 @@ class InjectiveExchange(InjectiveBase):
                 return {"success": True, "result": position_map}
             return {"success": True, "result": position_map}
         except Exception as e:
-            return {"success": False, "result": detailed_exception_info(e)}
+            return {"success": False, "error": detailed_exception_info(e)}
 
     async def launch_instant_spot_market(
         self,
@@ -254,7 +257,7 @@ class InjectiveExchange(InjectiveBase):
         min_notional: str,
     ) -> Dict:
         try:
-            self.chain_client.init_client()
+            await self.chain_client.init_client()
             msg = self.chain_client.composer.msg_instant_spot_market_launch(
                 sender=self.chain_client.address.to_acc_bech32(),
                 ticker=ticker,
@@ -267,7 +270,7 @@ class InjectiveExchange(InjectiveBase):
             res = await self.chain_client.message_broadcaster.broadcast([msg])
             return {"success": True, "result": res}
         except Exception as e:
-            return {"success": False, "result": detailed_exception_info(e)}
+            return {"success": False, "error": detailed_exception_info(e)}
 
     async def launch_instant_perp_market(
         self,
@@ -287,7 +290,7 @@ class InjectiveExchange(InjectiveBase):
     ) -> Dict:
         try:
 
-            self.chain_client.init_client()
+            await self.chain_client.init_client()
             msg = self.chain_client.composer.msg_instant_perpetual_market_launch(
                 sender=self.chain_client.address.to_acc_bech32(),
                 ticker=ticker,
@@ -307,7 +310,7 @@ class InjectiveExchange(InjectiveBase):
             res = await self.chain_client.message_broadcaster.broadcast([msg])
             return {"success": True, "result": res}
         except Exception as e:
-            return {"success": False, "result": detailed_exception_info(e)}
+            return {"success": False, "error": detailed_exception_info(e)}
 
     async def opt_out_trade_earn_rewards(self) -> Dict:
 
