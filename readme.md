@@ -96,6 +96,8 @@ agent10:
   network: <YOUR_DESIRED_NETWORK>
 ```
 
+Please, ensure that your Open AI API project has enough credits as well as access to `gpt-4o` model.
+
 ## Commands Overview
 
 The AI Agent supports several commands categorized into general actions, network configurations, and agent management.
