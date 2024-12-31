@@ -30,9 +30,23 @@ class InjectiveChatAgent:
             raise ValueError(
                 "No OpenAI API key found. Please set the OPENAI_API_KEY environment variable."
             )
-
+        
+        self.provider = os.getenv("API_PROVIDER", "openai")
+        match self.provider:
+            case "openai":
+                self.initial_model = "gpt-4o"
+                self.conversational_model = "gpt-4-turbo-preview"
+                self.base_url = "https://api.openai.com/v1"
+            case "xai":
+                self.initial_model = "grok-2-latest"
+                self.conversational_model = "grok-2-latest"
+                self.base_url = "https://api.x.ai/v1"
+        
         # Initialize OpenAI client
-        self.client = OpenAI(api_key=self.api_key)
+        self.client = OpenAI(
+            api_key=self.api_key,
+            base_url=self.base_url,
+        )
 
         # Initialize conversation histories
         self.conversations = {}
@@ -107,7 +121,7 @@ class InjectiveChatAgent:
             # Get response from OpenAI
             response = await asyncio.to_thread(
                 self.client.chat.completions.create,
-                model="gpt-4o",
+                model=self.initial_model,
                 messages=[
                     {
                         "role": "system",
@@ -183,7 +197,7 @@ class InjectiveChatAgent:
                 # Get final response
                 second_response = await asyncio.to_thread(
                     self.client.chat.completions.create,
-                    model="gpt-4-turbo-preview",
+                    model=self.conversational_model,
                     messages=self.conversations[session_id],
                     max_tokens=2000,
                     temperature=0.7,

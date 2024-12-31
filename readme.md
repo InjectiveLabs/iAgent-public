@@ -32,9 +32,10 @@ All required packages are listed in requirements.txt. Ensure you have Python 3.1
 	```bash  
 	pip install -r requirements.txt  
 	```
-3. Setup OpenAI api Key
+3. Setup OpenAI api Key and API provider (`"openai"` is set by default; `"xai"` is also supported).
 	```bash
 	export OPENAI_API_KEY="your_openai_api_key_here"
+   export API_PROVIDER="openai|xai"
 	```
 4. Running the agent  
 	To start the backend on a specified port (default is 5000), run:  
